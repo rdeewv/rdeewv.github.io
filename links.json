@@ -1,0 +1,9 @@
+{
+    "separators": ["-", "/"],
+    "links": {
+        "foo": "https://google.com",
+        "bar": {
+            "baz": "https://github.com"
+        }
+    }
+}
