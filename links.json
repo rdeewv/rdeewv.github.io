@@ -1,9 +1,14 @@
-{
-    "separators": ["-", "/"],
-    "links": {
-        "foo": "https://google.com",
-        "bar": {
-            "baz": "https://github.com"
-        }
-    }
-}
+[
+  {
+    "slug": "yt",
+    "url": "https://youtube.com/yourchannel"
+  },
+  {
+    "slug": "store",
+    "url": "https://mystore.com"
+  },
+  {
+    "slug": "portfolio",
+    "url": "https://yourportfolio.com"
+  }
+]
