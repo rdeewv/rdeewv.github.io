@@ -1,11 +1,11 @@
-name: Prettify JSON (jq safe)
+name: Prettify links.json (jq safe)
 
 on:
   push:
     paths:
-      - '**.json'
+      - 'links.json'
 
-# ✅ Required for pushing commits back
+# ✅ Allow Action to push commit
 permissions:
   contents: write
 
@@ -13,7 +13,7 @@ jobs:
   format-json:
     runs-on: ubuntu-latest
 
-    # ✅ Infinite loop protection
+    # ✅ Prevent infinite loop
     if: github.actor != 'github-actions[bot]'
 
     steps:
@@ -27,33 +27,26 @@ jobs:
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      # 3️⃣ Format + sort all JSON
-      - name: Prettify JSON files
+      # 3️⃣ Prettify links.json
+      - name: Format links.json
         run: |
-          changed=false
+          jq -S '.' links.json > tmp.json
 
-          for file in $(find . -name "*.json"); do
-            echo "Formatting $file"
+          if ! cmp -s tmp.json links.json; then
+            mv tmp.json links.json
+            echo "changed=true" >> $GITHUB_ENV
+          else
+            rm tmp.json
+            echo "changed=false" >> $GITHUB_ENV
+          fi
 
-            jq -S '.' "$file" > tmp.json
-
-            if ! cmp -s tmp.json "$file"; then
-              mv tmp.json "$file"
-              changed=true
-            else
-              rm tmp.json
-            fi
-          done
-
-          echo "changed=$changed" >> $GITHUB_ENV
-
-      # 4️⃣ Commit only if changed
+      # 4️⃣ Commit if changed
       - name: Commit changes
         if: env.changed == 'true'
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
 
-          git add .
-          git commit -m "chore: prettify json via jq"
+          git add links.json
+          git commit -m "chore: prettify links.json"
           git push
