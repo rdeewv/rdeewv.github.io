@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+</head>
+<body>
+  <script>
+    // Get slug from URL
+    const slug = window.location.pathname.replace(/^\/+/, "").replace(/\/+$/, "");
+
+    // If visiting homepage, do nothing
+    if (slug === "") {
+      window.location.href = "/";
+    }
+
+    fetch("/links.json")
+      .then(res => res.json())
+      .then(data => {
+        const match = data.find(link => link.slug === slug);
+
+        if (match) {
+          window.location.replace(match.url);
+        } else {
+          document.body.innerHTML = "<h2>404 - Link not found</h2>";
+        }
+      })
+      .catch(err => {
+        document.body.innerHTML = "<h2>Error loading links</h2>";
+      });
+  </script>
+</body>
+</html>
