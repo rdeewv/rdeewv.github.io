@@ -10,5 +10,9 @@
   {
     "slug": "portfolio",
     "url": "https://yourportfolio.com"
+  },
+ {
+    "slug": "new",
+    "url": "https://new.com"
   }
 ]
