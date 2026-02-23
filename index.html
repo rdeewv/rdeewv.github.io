@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My GitHub Page</title>
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
 </head>
 <body>
+  <script>
+    const path = window.location.pathname.replace("/", "");
 
-    <h1>Hello 👋</h1>
-    <p>This is my first GitHub Pages website.</p>
+    fetch("/links.json")
+      .then(res => res.json())
+      .then(data => {
+        const match = data.find(link => link.slug === path);
 
-    <p>If you can see this, it works 🎉</p>
-
+        if (match) {
+          window.location.href = match.url;
+        } else {
+          document.body.innerHTML = "<h2>Link not found</h2>";
+        }
+      })
+      .catch(() => {
+        document.body.innerHTML = "<h2>Error loading links</h2>";
+      });
+  </script>
 </body>
 </html>
