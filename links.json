@@ -1,18 +1,1 @@
-[
-  {
-    "slug": "yt",
-    "url": "https://www.youtube.com/watch?v=quXa8UNi8A8"
-  },
-  {
-    "slug": "store",
-    "url": "https://www.raycast.com/"
-  },
-  {
-    "slug": "portfolio",
-    "url": "https://yourportfolio.com"
-  },
- {
-    "slug": "new",
-    "url": "https://new.com"
-  }
-]
+[{"slug":"yt","url":"https:\/\/www.youtube.com\/watch?v=quXa8UNi8A8"},{"slug":"store","url":"https:\/\/www.raycast.com\/"},{"slug":"portfolio","url":"https:\/\/yourportfolio.com"},{"slug":"new","url":"https:\/\/new.com"},{"slug":";lkj","url":";lkj"}]
