@@ -6,28 +6,31 @@
 </head>
 <body>
   <script>
-    // Get slug from URL
-    const slug = window.location.pathname.replace(/^\/+/, "").replace(/\/+$/, "");
+  // Get path without leading/trailing slash
+  const path = window.location.pathname.replace(/^\/+|\/+$/g, "");
 
-    // If visiting homepage, do nothing
-    if (slug === "") {
-      window.location.href = "/";
-    }
+  // If homepage, stop
+  if (!path) {
+    window.location.href = "/";
+  }
 
-    fetch("/links.json")
-      .then(res => res.json())
-      .then(data => {
-        const match = data.find(link => link.slug === slug);
+  fetch("/links.json")
+    .then(res => res.json())
+    .then(data => {
+      // Match slug OR urlcode
+      const match = data.find(link =>
+        link.slug === path || link.urlcode === path
+      );
 
-        if (match) {
-          window.location.replace(match.url);
-        } else {
-          document.body.innerHTML = "<h2>404 - Link not found</h2>";
-        }
-      })
-      .catch(err => {
-        document.body.innerHTML = "<h2>Error loading links</h2>";
-      });
-  </script>
+      if (match) {
+        window.location.replace(match.url);
+      } else {
+        document.body.innerHTML = "<h2>404 - Link not found</h2>";
+      }
+    })
+    .catch(() => {
+      document.body.innerHTML = "<h2>Error loading links</h2>";
+    });
+</script>
 </body>
 </html>
